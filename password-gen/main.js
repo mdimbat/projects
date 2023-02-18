@@ -1,5 +1,5 @@
 const numbers = '0123456789';
-const specialChars = '-!@$&';
+const specialChars = '!@$%&*_+~?-=';
 const lowercase = 'abcdefghijklmnopqrstuvwxyz';
 const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -40,7 +40,12 @@ document.getElementById('generateBtn').addEventListener('click', generatePasswor
 
 document.getElementById('copyBtn').addEventListener('click', () => {
   const passwordElement = document.getElementById('password');
-  passwordElement.select();
-  document.execCommand('copy');
-  alert(`Copied the password: ${passwordElement.value}`);
+  const password = passwordElement.innerText; // get password text instead of value
+  navigator.clipboard.writeText(password) // use newer clipboard API instead of execCommand
+    .then(() => {
+      alert(`Copied the password: ${password}`);
+    })
+    .catch((error) => {
+      console.error('Failed to copy password:', error);
+    });
 });
